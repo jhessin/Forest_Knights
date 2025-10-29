@@ -11,5 +11,9 @@
 	},
 	"eslint.run": "onType",
 	"eslint.format.enable": true,
-	"eslint.useFlatConfig": false
+	"eslint.useFlatConfig": false,
+	"files.exclude": {
+		"out": true,
+		"node_modules": true
+	}
 }

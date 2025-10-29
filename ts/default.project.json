@@ -11,8 +11,9 @@
 		},
 		"ReplicatedStorage": {
 			"$className": "ReplicatedStorage",
+			"$path": "include",
 			"rbxts_include": {
-				"$path": "include",
+				"$className": "Folder",
 				"node_modules": {
 					"$className": "Folder",
 					"@rbxts": {
