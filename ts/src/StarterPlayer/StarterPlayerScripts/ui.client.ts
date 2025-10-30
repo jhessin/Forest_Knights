@@ -1,5 +1,5 @@
 import { Players, ReplicatedStorage, StarterGui, Workspace } from "@rbxts/services";
-import { MsgType } from "ReplicatedStorage/Enums";
+import { MsgType } from "ReplicatedStorage/TS/Enums";
 
 const Player = Players.LocalPlayer;
 const PlayerGui = Player.WaitForChild("PlayerGui") as StarterGui;
@@ -22,11 +22,25 @@ function OnLeave() {
 	Player.Character?.PivotTo(Workspace.SpawnLocation.CFrame);
 	Messenger.FireServer(MsgType.RemovePlayer, Player.Name);
 	LeaveUi.Enabled = false;
+	PartyGui.Enabled = false;
 }
 
+LeaveUi.LeaveTextButton.Activated.Connect(OnLeave);
+PartyGui.PartyFrame.CloseTextButton.Activated.Connect(OnLeave);
+
 function OnMessageFromServer(msg: MsgType) {
-	if (msg === MsgType.ShowPartyScreen) PartyGui.Enabled = true;
-	else if (msg === MsgType.HidePartyScreen) PartyGui.Enabled = false;
+	switch (msg) {
+		case MsgType.ShowPartyScreen:
+			PartyGui.Enabled = true;
+			break;
+
+		case MsgType.HidePartyScreen:
+			PartyGui.Enabled = false;
+			break;
+
+		default:
+			break;
+	}
 }
 
 LeaveUi.LeaveTextButton.Activated.Connect(OnLeave);
