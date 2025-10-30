@@ -60,20 +60,35 @@ function updatePlayerCount() {
 	Teleporter.PlayerCountGui.PlayerCountTextLabel.Text = `${numPlayers}/${maxPlayers}`;
 }
 
+const numPlayers = () => TeleportList.size();
+const maxPlayers = () => Teleporter.MaxPlayers.Value;
+
 Teleporter.NumPlayers.Changed.Connect(updatePlayerCount);
 Teleporter.MaxPlayers.Changed.Connect(updatePlayerCount);
 
 function onServerEvent(plr: Player, msg: MsgType | unknown, arg: string | unknown) {
 	switch (msg) {
+		case MsgType.AddPlayer:
+			if (TeleportList.find((v) => v === plr.Name)) {
+				return;
+			}
+			if (numPlayers() < maxPlayers()) TeleportList.push(plr.Name);
+			Teleporter.NumPlayers.Value = numPlayers();
+			if (numPlayers() === maxPlayers()) lockTeleporter();
+			break;
 		case MsgType.RemovePlayer:
-			if (TeleportList.find((v) => v === arg)) {
-				TeleportList.remove(TeleportList.indexOf(arg as string));
-				const numPlayers = TeleportList.size();
-				Teleporter.NumPlayers.Value = numPlayers;
-				if (numPlayers <= 0) {
+			if (TeleportList.find((v) => v === plr.Name)) {
+				TeleportList.remove(TeleportList.indexOf(plr.Name));
+				Teleporter.NumPlayers.Value = numPlayers();
+				if (numPlayers() === 0) {
 					unlockTeleporter();
 				}
 			}
+			break;
+
+		case MsgType.SetRoomSize:
+			Teleporter.MaxPlayers.Value = arg as number;
+			unlockTeleporter();
 			break;
 
 		default:
