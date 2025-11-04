@@ -71,6 +71,10 @@ function OnMessageFromServer(msg: MsgType) {
 			PartyGui.Enabled = false;
 			break;
 
+		case MsgType.EnableLeave:
+			LeaveUi.Enabled = true;
+			break;
+
 		default:
 			break;
 	}
