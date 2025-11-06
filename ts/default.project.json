@@ -1,5 +1,5 @@
 {
-	"name": "Forest-Knights",
+	"name": "Forest-Knights(lobby)",
 	"globIgnorePaths": ["**/package.json", "**/tsconfig.json"],
 	"tree": {
 		"$className": "DataModel",
