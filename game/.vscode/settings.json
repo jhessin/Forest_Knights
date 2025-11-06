@@ -1,0 +1,19 @@
+{
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"files.eol": "\n",
+	"[typescript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+		"editor.formatOnSave": true
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+		"editor.formatOnSave": true
+	},
+	"eslint.run": "onType",
+	"eslint.format.enable": true,
+	"eslint.useFlatConfig": false,
+	"files.exclude": {
+		"out": true,
+		"node_modules": true
+	}
+}
