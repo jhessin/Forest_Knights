@@ -125,10 +125,14 @@ function onServerEvent(plr: Player, msg: MsgType | unknown, arg: string | unknow
 				if (i === 0) {
 					Teleporter.PlayerCountGui.CountdownTextLabel.Text = "Teleporting...";
 					Players.GetPlayers().forEach((plr) => {
-						if (TeleportList.find((name) => name === plr.Name)) TPS.Teleport(ForestID, plr);
+						if (TeleportList.find((name) => name === plr.Name)) {
+							TeleportList.remove(TeleportList.indexOf(plr.Name));
+							TPS.Teleport(ForestID, plr);
+						}
 					});
 					Teleporter.PlayerCountGui.CountdownTextLabel.Text = "";
 					Teleporter.CountdownStarted.Value = false;
+					ResetPlayerCount();
 				}
 				task.wait(1);
 			}
@@ -150,3 +154,8 @@ function onPlayerAdded(player: Player) {
 }
 
 Players.PlayerAdded.Connect(onPlayerAdded);
+
+function ResetPlayerCount() {
+	Teleporter.NumPlayers.Value = 0;
+	Teleporter.MaxPlayers.Value = 5;
+}
